@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  primary-db:
+    image: postgres:latest
+    container_name: primary-db
+    restart: always
+    environment:
+      POSTGRES_DB: primary_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5401:5432"
+    volumes:
+      - primary_data:/var/lib/postgresql/data
+
+  secondary-db:
+    image: postgres:latest
+    container_name: secondary-db
+    restart: always
+    environment:
+      POSTGRES_DB: secondary_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5402:5432"
+    volumes:
+      - secondary_data:/var/lib/postgresql/data
+
+  target-db:
+    image: postgres:latest
+    container_name: target-db
+    restart: always
+    environment:
+      POSTGRES_DB: target_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5403:5432"
+    volumes:
+      - target_data:/var/lib/postgresql/data
+
+volumes:
+  primary_data:
+  secondary_data:
+  target_data:
+

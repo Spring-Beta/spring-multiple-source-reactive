@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: multiple-source-reactive
+
+  r2dbc:
+    datasources:
+      primary:
+        url: r2dbc:postgresql://localhost:5401/primary_db
+        username: postgres
+        password: postgres
+        pool:
+          initial-size: 5
+          max-size: 10
+      secondary:
+        url: r2dbc:postgresql://localhost:5402/secondary_db
+        username: postgres
+        password: postgres
+        pool:
+          initial-size: 5
+          max-size: 10
+      target:
+        url: r2dbc:postgresql://localhost:5403/target_db
+        username: postgres
+        password: postgres
+        pool:
+          initial-size: 5
+          max-size: 10
+
+  sql:
+    init:
+      mode: always  # Ensures database initialization if needed
+
+  logging:
+    level:
+      root: INFO
+      org.springframework.r2dbc: DEBUG
+      org.springframework.transaction: TRACE
+      io.r2dbc.postgresql: DEBUG
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui
+    operations-sorter: method
